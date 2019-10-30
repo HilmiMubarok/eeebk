@@ -33,10 +33,20 @@
   <script src="<?= base_url() ?>assets/js/sb-admin-2.js"></script>
   <script src="<?= base_url() ?>assets/js/datepicker.min.js"></script>
 
+  <script src="<?= base_url() ?>assets/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url() ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/select2.min.js"></script>
+
   <script>
-    $('.datepicker').datepicker({
-        format: "yyyy/mm/dd"
-    });
+    $(document).ready(function() {
+      $('.datepicker').datepicker({
+          format: "yyyy/mm/dd"
+      });
+      $('#dataTable').DataTable();
+      $('#select2').select2({
+        theme: 'bootstrap'
+      });
+    })
   </script>
 
 </body>

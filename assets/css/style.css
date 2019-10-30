@@ -1,0 +1,9 @@
+.bg-login-image {
+	background:url(../img/bglogin.png) !important;
+	background-position:center !important;
+	background-size:cover !important;
+}
+
+a {
+	text-decoration: none !important;
+}

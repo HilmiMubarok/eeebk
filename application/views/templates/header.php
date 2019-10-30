@@ -15,6 +15,10 @@
 		<!-- Custom styles for this template-->
 		<link href="<?= base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
 		<link href="<?= base_url() ?>assets/css/datepicker.min.css" rel="stylesheet">
+		<link href="<?= base_url() ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+		<link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
+		<link href="<?= base_url() ?>assets/css/select2.min.css" rel="stylesheet">
+		<link href="<?= base_url() ?>assets/css/select2-bootstrap.min.css" rel="stylesheet">
 
 	</head>
 
@@ -24,11 +28,14 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+		<ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url("dashboard") ?>">
-				<div class="sidebar-brand-text mx-3">Brand Name</div>
+				<div class="sidebar-brand-icon rotate-n-15">
+		          <i class="fas fa-laugh-wink"></i>
+		        </div>
+				<div class="sidebar-brand-text mx-3">EBK SMK N 5 </div>
 			</a>
 
 			<!-- Divider -->
@@ -41,6 +48,30 @@
 					<span>Dashboard</span>
 				</a>
 			</li>
+
+			<?php if ($this->session->userdata('level') == "bk"): ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('pelanggaran') ?>">
+						<i class="fas fa-fw fa-ban"></i>
+						<span>Pelanggaran</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('skoring') ?>">
+						<i class="fas fa-fw fa-ban"></i>
+						<span>Skoring</span>
+					</a>
+				</li>
+			<?php endif ?>
+
+			<?php if ($this->session->userdata('level') == "siswa"): ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('konseling') ?>">
+						<i class="fas fa-fw fa-ban"></i>
+						<span>Konseling</span>
+					</a>
+				</li>
+			<?php endif ?>
 
 			<!-- Menu User -->
 			<li class="nav-item">
@@ -60,6 +91,13 @@
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
+
+			<li class="nav-item">
+				<a class="nav-link" href="auth/logout">
+					<i class="fas fa-fw fa-sign-out-alt"></i>
+					<span>Logout</span>
+				</a>
+			</li>
 
 			<!-- Sidebar Toggler (Sidebar) -->
 			<div class="text-center d-none d-md-inline mt-3">

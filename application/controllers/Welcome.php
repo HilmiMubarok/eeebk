@@ -27,6 +27,9 @@ class Welcome extends CI_Controller {
 	{
 		$data['title'] = "Blank Page";
 
+		echo password_hash("siswa", PASSWORD_DEFAULT); echo "<br>";
+		echo password_hash("bk", PASSWORD_DEFAULT); echo "<br>";
+		echo password_hash("ortu", PASSWORD_DEFAULT); echo "<br>";
 		
 		$this->load->view('templates/header', $data);
 		
