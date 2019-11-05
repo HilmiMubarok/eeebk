@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('DashboardModel');
+		$this->load->model('CRUDModel', 'crud');
 		if ($this->session->userdata('logged_in') == FALSE ) {
 			redirect("auth");
 		}
@@ -18,6 +19,10 @@ class Dashboard extends CI_Controller {
 		if ($this->session->userdata('level') == "siswa") {
 			$data['level']   = "Siswa";
 		} elseif ($this->session->userdata('level') == "bk") {
+			$where = array(
+				'status' => 'pending'
+			);
+			$data['pelanggaran_pending'] = count($this->crud->getWhere($where, 'review_pelanggaran')->result());
 			$data['level']   = "BK";
 		} elseif ($this->session->userdata('level') == "ortu") {
 			$data['level']   = "Orang Tua";

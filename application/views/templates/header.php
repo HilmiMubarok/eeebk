@@ -43,7 +43,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item">
-				<a class="nav-link" href="#!">
+				<a class="nav-link" href="<?= base_url("dashboard") ?>">
 					<i class="fas fa-fw fa-tachometer-alt"></i>
 					<span>Dashboard</span>
 				</a>
@@ -62,6 +62,12 @@
 						<span>Skoring</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('siswa') ?>">
+						<i class="fas fa-fw fa-ban"></i>
+						<span>Siswa</span>
+					</a>
+				</li>
 			<?php endif ?>
 
 			<?php if ($this->session->userdata('level') == "siswa"): ?>
@@ -74,7 +80,7 @@
 			<?php endif ?>
 
 			<!-- Menu User -->
-			<li class="nav-item">
+			<!-- <li class="nav-item">
 				<a class="nav-link collapsed" href="#!" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
 					<i class="fas fa-fw fa-book-open"></i>
 					<span>Dropdown</span>
@@ -87,7 +93,7 @@
 				  </div>
 				</div>
 				
-			</li>
+			</li> -->
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">

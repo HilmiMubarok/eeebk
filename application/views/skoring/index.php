@@ -28,7 +28,7 @@
 										Setujui
 									</button>
 								</a>
-								<a href="">
+								<a href="<?= base_url('skoring/tolak/'.$s->siswa_id.'/'.$s->pelanggaran_id.'/'.$s->skor_pelanggaran) ?>">
 									<button class="btn btn-danger">
 										Tolak
 									</button>

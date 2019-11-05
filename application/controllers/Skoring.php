@@ -48,6 +48,29 @@ class Skoring extends CI_Controller {
 
 	}
 
+	public function tolak($siswa_id, $pelanggaran_id, $skor_pelanggaran)
+	{
+
+		$tolak = $this->skoring->tolak($siswa_id, $pelanggaran_id, $skor_pelanggaran);
+
+		if ($tolak) {
+			$data = array(
+				'pesan' => 'Data Berhasil Ditolak',
+				'icon'  => 'success'
+			);
+			$this->session->set_flashdata($data);
+			redirect("skoring");
+		} else {
+			$data = array(
+				'pesan' => 'Data Gagal Ditolak',
+				'icon'  => 'danger'
+			);
+			$this->session->set_flashdata($data);
+			redirect("skoring");
+		}
+		
+	}
+
 }
 
 /* End of file Skoring.php */

@@ -40,15 +40,15 @@ class TestExcel extends CI_Controller {
                 $inputFileName = $path . $import_xls_file;
                  
                 try {
-                    $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-                    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-                    $objPHPExcel = $objReader->load($inputFileName);
+                    $inputFileType  = PHPExcel_IOFactory::identify($inputFileName);
+                    $objReader      = PHPExcel_IOFactory::createReader($inputFileType);
+                    $objPHPExcel    = $objReader->load($inputFileName);
                     $allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-                    $flag = true;
-                    $i=0;
+                    $flag           = true;
+                    $i              = 0;
                     foreach ($allDataInSheet as $value) {
                       if($flag){
-                        $flag =false;
+                        $flag = false;
                         continue;
                       }
                       $inserdata[$i]['nama_pelanggaran'] = $value['C'];
