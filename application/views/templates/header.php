@@ -1,3 +1,4 @@
+<?php $uri = $this->uri->segment(1) ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -51,20 +52,34 @@
 
 			<?php if ($this->session->userdata('level') == "bk"): ?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('pelanggaran') ?>">
-						<i class="fas fa-fw fa-ban"></i>
-						<span>Pelanggaran</span>
+					<a class="nav-link collapsed" href="#!" data-toggle="collapse" data-target="#skoring" aria-expanded="true" aria-controls="skoring">
+						<i class="fas fa-ban"></i>
+						<span>Skoring </span>
 					</a>
+					<div id="skoring" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+					  <div class="bg-white py-2 collapse-inner rounded">
+					    <a class="collapse-item <?= ($uri == "pelanggaran" ? "active" : null) ?>" href="<?= base_url('pelanggaran') ?>">Master Pelanggaran</a>
+					    <a class="collapse-item <?= ($uri == "skoring" ? "active" : null) ?>" href="<?= base_url('skoring') ?>">Skoring</a>
+					  </div>
+					</div>
+					
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('skoring') ?>">
-						<i class="fas fa-fw fa-ban"></i>
-						<span>Skoring</span>
+					<a class="nav-link collapsed" href="#!" data-toggle="collapse" data-target="#rewarding" aria-expanded="true" aria-controls="rewarding">
+						<i class="fas fa-book-open"></i>
+						<span>Rewarding </span>
 					</a>
+					<div id="rewarding" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+					  <div class="bg-white py-2 collapse-inner rounded">
+					    <a class="collapse-item <?= ($uri == "reward" ? "active" : null) ?>" href="<?= base_url('reward') ?>">Master Reward</a>
+					    <a class="collapse-item <?= ($uri == "rewarding" ? "active" : null) ?>" href="<?= base_url('rewarding') ?>">Rewarding</a>
+					  </div>
+					</div>
+					
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= base_url('siswa') ?>">
-						<i class="fas fa-fw fa-ban"></i>
+						<i class="fas fa-fw fa-user"></i>
 						<span>Siswa</span>
 					</a>
 				</li>

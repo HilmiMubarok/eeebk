@@ -10,13 +10,19 @@ class Siswa extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('CRUDModel', 'crud');
+		$this->load->model('SiswaModel', 'siswa');
+	}
+
+	public function findDuplicate($count)
+	{
+		return $count > 1;
 	}
 
 	public function index()
 	{
-		$data['title'] = "Data Siswa";
+		$data['title']       = "Data Siswa";
 		$data['title_modal'] = "Import Data Siswa";
-
+		$data['siswa']       = $this->crud->getAll('siswa')->result();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/navbar', $data);
@@ -42,6 +48,8 @@ class Siswa extends CI_Controller {
 		// file path
 		$spreadsheet    = $reader->load($_FILES['data_siswa']['tmp_name']);
 		$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+		// $allDataInSheet = $spreadsheet->getActiveSheet()->getCellByColumnAndRow()->getValue();
+
 		// array Count
 		$arrayCount   = count($allDataInSheet);
 		$flag         = 0;
@@ -49,9 +57,6 @@ class Siswa extends CI_Controller {
 			'NIS',
 			'Nama Siswa',
 			'L/P',
-			'Tempat Lahir', 
-			'Tanggal Lahir',
-			'Tahun Lahir',
 			'Agama',
 			'Alamat',
 			'Ayah', 
@@ -65,9 +70,6 @@ class Siswa extends CI_Controller {
 			'NIS'           => 'NIS',
 			'Nama Siswa'    => 'Nama Siswa',
 			'L/P'           => 'L/P',
-			'Tempat Lahir'  => 'Tempat Lahir',
-			'Tanggal Lahir' => 'Tanggal Lahir',
-			'Tahun Lahir'   => 'Tahun Lahir',
 			'Agama'         => 'Agama',
 			'Alamat'        => 'Alamat',
 			'Ayah'          => 'Ayah',
@@ -98,9 +100,6 @@ class Siswa extends CI_Controller {
 				$nis          = filter_var(trim($allDataInSheet[$i][$SheetDataKey['NIS']]), FILTER_SANITIZE_STRING);
 				$nama         = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Nama Siswa']]), FILTER_SANITIZE_STRING);
 				$jenkel       = filter_var(trim($allDataInSheet[$i][$SheetDataKey['L/P']]), FILTER_SANITIZE_STRING);
-				$tempat_lahir = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Tempat Lahir']]), FILTER_SANITIZE_STRING);
-				$tgl_lahir    = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Tanggal Lahir']]), FILTER_SANITIZE_STRING);
-				$thn_lahir    = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Tahun Lahir']]), FILTER_SANITIZE_STRING);
 				$agama        = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Agama']]), FILTER_SANITIZE_STRING);
 				$alamat       = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Alamat']]), FILTER_SANITIZE_STRING);
 				$ayah         = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Ayah']]), FILTER_SANITIZE_STRING);
@@ -111,28 +110,42 @@ class Siswa extends CI_Controller {
 				$ket          = filter_var(trim($allDataInSheet[$i][$SheetDataKey['Keterangan']]), FILTER_SANITIZE_STRING);
 
 				$fetchData[] = array(
-					'NIS'          => $nis, 
-					'nama_siswa'   => $nama, 
-					'jenkel'       => $jenkel,
-					'tempat_lahir' => $tempat_lahir,
-					'tanggal'      => $tgl_lahir,
-					'thn_lahir'    => $thn_lahir,
-					'agama'        => $agama,
-					'alamat'       => $alamat,
-					'ayah'         => $ayah,
-					'ibu'          => $ibu,
-					'asal_sekolah' => $asal_sekolah,
-					'usia'         => $usia,
-					'kelas'        => $kelas,
-					'ket'          => $ket
+					'NIS'           => $nis, 
+					'nama_siswa'    => $nama, 
+					'jenkel'        => $jenkel,
+					'tempat_lahir'  => '',
+					'tanggal_lahir' => '',
+					'agama'         => $agama,
+					'alamat'        => $alamat,
+					'nama_ayah'     => $ayah,
+					'nama_ibu'      => $ibu,
+					'asal_sekolah'  => $asal_sekolah,
+					'usia'          => $usia,
+					'kelas'         => $kelas,
+					'keterangan'    => $ket
 				);
 			}
 
 			$data['dataInfo'] = $fetchData;
-			echo "<pre>";
-			var_dump($data['dataInfo']);
-			// $this->site->setBatchImport($fetchData);
-			// $this->site->importData();
+
+			// $this->siswa->setBatchImport($fetchData);
+			$importToMysql = $this->siswa->importData('siswa', $fetchData);
+
+			if ($importToMysql) {
+				$data = array(
+					'pesan' => 'Data Berhasil Diimport',
+					'icon'  => 'success'
+				);
+				$this->session->set_flashdata($data);
+				redirect("siswa");
+			} else {
+				$data = array(
+					'pesan' => 'Data Gagal Diimport',
+					'icon'  => 'danger'
+				);
+				$this->session->set_flashdata($data);
+				redirect("siswa");
+			}
 		}
 
 	}
