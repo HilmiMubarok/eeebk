@@ -7,6 +7,7 @@ class Auth extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('AuthModel');
+		$this->load->model('CRUDModel', 'crud');
 	}
 
 	public function index()
@@ -24,15 +25,18 @@ class Auth extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$auth     = array('username' => $username);
+		$authUser = array('nis' => $username);
 		$res      = $this->AuthModel->cek_login('users', $auth)->row();
+		$getUser  = $this->crud->getWhere($authUser, 'siswa')->row();
 
 		if ($res) {
 
 			if (password_verify($password, $res->password)) {
 				$user_data = array(
-					'username'  => $res->username,
-					'level'     => $res->level,
-					'logged_in' => TRUE
+					'username'   => $res->username,
+					'nama_siswa' => $getUser->nama_siswa,
+					'level'      => $res->level,
+					'logged_in'  => TRUE
 				);
 
 

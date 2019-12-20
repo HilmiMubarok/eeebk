@@ -16,8 +16,12 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = "Dashboard";
+		
 		if ($this->session->userdata('level') == "siswa") {
-			$data['level']   = "Siswa";
+			$data['level']        = "Siswa";
+			$data['jumlah_point'] = $this->crud->getWhere(array('siswa_id' => $this->session->userdata('username')), 'point')->row();
+			$data['jumlah_skor']  = $this->crud->getWhere(array('siswa_id' => $this->session->userdata('username')), 'skor')->row();
+			$data['jumlah_pelanggaran']  = count($this->crud->getWhere(array('siswa_id' => $this->session->userdata('username')), 'review_pelanggaran')->result());
 		} elseif ($this->session->userdata('level') == "bk") {
 			$where = array(
 				'status' => 'pending'
